@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vêtements - Raz-SM</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Bannière -->
+    <div class="banner">
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="vetements.html">Vêtements</a>
+        <a href="accessoires.html">Accessoires</a>
+        <a href="panier.html" class="cart-icon">Panier <span class="cart-count" id="cart-count">0</span></a>
+    </div>
+
+    <!-- Liste des vêtements -->
+    <div class="products" id="product-list">
+        <!-- Les produits seront ajoutés dynamiquement via JavaScript -->
+    </div>
+
+    <script>
+        const products = [
+             { id: 1, name: "chemise homme", price: "6.000", image: "H1.jpg" },
+            { id: 2, name: "complet femme", price: "10.000", image: "F1.jpg" },
+            { id: 3, name: "complet enfent", price: "7.000", image: "E1.jpg" },
+            { id: 4, name: "vetement pour couple", price: "40.000", image: "C1.jpg" },
+            { id: 5, name: "chemise homme", price: "5.000", image: "H4.jpg" },
+			{ id: 6, name: "chemise homme", price: "5.000", image: "H3.jpg" },
+			{ id: 7, name: "robe", price: "10.000", image: "F2.jpg" },
+			{ id: 8, name: "COMPLET FEMME", price: "15.000", image: "F4.jpg" },
+			
+        ];
+
+        const cart = [];
+        const productList = document.getElementById('product-list');
+        const cartCount = document.getElementById('cart-count');
+
+        function renderProducts() {
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.price} fcfa</p>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Ajouter au panier</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            cartCount.textContent = cart.length;
+        }
+
+        renderProducts();
+		function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    const cartCount = document.getElementById('cart-count');
+    cartCount.textContent = cart.length;
+    alert(`${product.name} a été ajouté au panier.`);
+}
+		
+    </script>
+</body>
+</html>

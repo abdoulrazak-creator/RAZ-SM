@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessoires - Raz-SM</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Bannière -->
+    <div class="banner">
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="vetements.html">Vêtements</a>
+        <a href="accessoires.html">Accessoires</a>
+        <a href="panier.html" class="cart-icon">Panier <span class="cart-count" id="cart-count">0</span></a>
+    </div>
+
+    <!-- Liste des accessoires -->
+    <div class="products" id="product-list">
+        <!-- Les produits seront ajoutés dynamiquement via JavaScript -->
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: "Accessoire 1", price: "15.00", image: "accessoire1.jpg" },
+            { id: 2, name: "Accessoire 2", price: "20.00", image: "accessoire2.jpg" },
+            { id: 3, name: "Accessoire 3", price: "25.00", image: "accessoire3.jpg" },
+            { id: 4, name: "Accessoire 4", price: "30.00", image: "accessoire4.jpg" },
+            { id: 5, name: "Accessoire 5", price: "35.00", image: "accessoire5.jpg" },
+        ];
+
+        const cart = [];
+        const productList = document.getElementById('product-list');
+        const cartCount = document.getElementById('cart-count');
+
+        function renderProducts() {
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.price} fcfa</p>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Ajouter au panier</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            cartCount.textContent = cart.length;
+        }
+
+        renderProducts();
+		function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    const cartCount = document.getElementById('cart-count');
+    cartCount.textContent = cart.length;
+    alert(`${product.name} a été ajouté au panier.`);
+}
+    </script>
+</body>
+</html>

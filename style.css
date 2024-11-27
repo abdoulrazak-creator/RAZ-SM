@@ -1,0 +1,76 @@
+ /* CSS de base */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+			background-color:#f999a0;
+        }
+        .banner {
+			background-image:url('ban.png');
+            background-color: #f99197;
+            color: #fff;
+            text-align: center;
+            padding: 40px;
+			background-position:center;
+			background-size:cover;
+			height:200px;
+        }
+        .banner img {
+            height:50px;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: #f22241;
+            padding: 10px 0;
+        }
+        .nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .product {
+            width: 18%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .product img {
+            width: 3cm;
+            height: 3cm;
+            object-fit: cover;
+        }
+        .add-to-cart {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .add-to-cart:hover {
+            background-color: #444;
+        }
+        .cart-icon {
+            position: relative;
+        }
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }

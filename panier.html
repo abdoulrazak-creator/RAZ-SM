@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier - Raz-SM</title>
+    <style>
+        /* Styles principaux */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f999a0;
+            color: #fff;
+        }
+
+        .banner {
+		background-image:url('ban.png');
+            background-color: #f99197;
+            color: #fff;
+            text-align: center;
+            padding: 40px;
+			background-position:center;
+			background-size:cover;
+			height:200px;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: #f22241;
+            padding: 10px 0;
+        }
+
+        .nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .cart-container {
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #d00;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 10px;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .cart-item h3, .cart-item p {
+            margin: 0;
+        }
+
+        .remove-btn {
+            background-color: #d00;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .remove-btn:hover {
+            background-color: #a00;
+        }
+
+        #checkout {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #checkout button {
+            background-color: #d00;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        #checkout button:hover {
+            background-color: #a00;
+        }
+
+        #messaging {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        #messaging textarea {
+            width: 80%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #d00;
+            border-radius: 5px;
+            background-color: #111;
+            color: #fff;
+        }
+
+        #messaging button {
+            background-color: #d00;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #messaging button:hover {
+            background-color: #a00;
+        }
+
+        .contact-icons {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .contact-icons a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bannière -->
+    <div class="banner">
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="vetements.html">Vêtements</a>
+        <a href="accessoires.html">Accessoires</a>
+        <a href="panier.html" class="cart-icon">Panier <span class="cart-count" id="cart-count">0</span></a>
+    </div>
+
+    <!-- Contenu du panier -->
+    <div class="cart-container" id="cart-list">
+        <p>Votre panier est vide.</p>
+    </div>
+	<div id="total-price">
+	<h3>total:<span id="total-amount">0</span>fcfa</h3>
+	</div>
+
+    <!-- Boutons de paiement -->
+    <div id="checkout">
+        <button onclick="pay('Mynita')">Payer avec Mynita</button>
+        <button onclick="pay('Amanata')">Payer avec Amanata</button>
+    </div>
+
+    <!-- Messagerie -->
+    <div id="messaging">
+        <h3>Envoyez un message à Raz-SM</h3>
+        <textarea id="message-box" placeholder="Écrivez votre message ici..."></textarea>
+        <button onclick="sendMessage()">Envoyer</button>
+    </div>
+
+    <!-- Icônes de contact -->
+    <div class="contact-icons">
+        <a href="https://wa.me/22797999041" target="_blank">WhatsApp</a> |
+        <a href="sms:+22797999041" target="_blank">SMS</a>
+    </div>
+
+    <script>
+        // Chargement des produits du panier depuis le localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartList = document.getElementById('cart-list');
+        const cartCount = document.getElementById('cart-count');
+
+        function renderCart() {
+            cartList.innerHTML = '';
+            if (cart.length === 0) {
+                cartList.innerHTML = '<p>Votre panier est vide.</p>';
+            } else {
+                cart.forEach((product, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('cart-item');
+                    itemDiv.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}">
+                        <div>
+                            <h3>${product.name}</h3>
+                            <p>${product.price} fcfa</p>
+                        </div>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">Retirer</button>
+                    `;
+                    cartList.appendChild(itemDiv);
+                });
+            }
+            cartCount.textContent = cart.length;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function pay(method) {
+            alert(`Vous serez redirigé vers ${method} pour finaliser votre paiement.`);
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('message-box').value;
+            alert(`Message envoyé : ${message}`);
+        }
+
+        renderCart();
+    </script>
+</body>
+</html>
+
+

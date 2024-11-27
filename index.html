@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Raz-SM</title>
+    <style>
+        /* CSS de base */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+			background-color:#f999a0;
+        .banner {
+			background-image:url('ban.png');
+            background-color: #f99197;
+            color: #fff;
+            text-align: center;
+            padding: 40px;
+			background-position:center;
+			background-size:cover;
+			height:200px;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: 
+            padding: 10px 0;
+        }
+        .nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .product {
+            width: 18%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .product img {
+            width: 3cm;
+            height: 3cm;
+            object-fit: cover;
+        }
+        .add-to-cart {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .add-to-cart:hover {
+            background-color: #444;
+        }
+        .cart-icon {
+            position: relative;
+        }
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bannière -->
+    <div class="banner">
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <a href="index.html">Accueil</a>
+        <a href="vetements.html">Vêtements</a>
+        <a href="accessoires.html">Accessoires</a>
+        <a href="panier.html" class="cart-icon">
+            Panier <span class="cart-count" id="cart-count">0</span>
+        </a>
+    </div>
+
+    <!-- Liste des produits -->
+    <div class="products" id="product-list">
+        <!-- Les produits seront ajoutés dynamiquement via JavaScript -->
+    </div>
+
+    <script>
+        // JavaScript pour ajouter des produits
+        const products = [
+            { id: 1, name: "chemise homme", price: "6000", image: "H1.jpg" },
+            { id: 2, name: "complet femme", price: "10000", image: "F1.jpg" },
+            { id: 3, name: "complet enfent", price: "7000", image: "E1.jpg" },
+            { id: 4, name: "vetement pour couple", price: "40000", image: "C1.jpg" },
+            { id: 5, name: "chemise homme", price: "5000", image: "H2.jpg" },
+			{ id: 6, name: "chemise homme", price: "5000", image: "H3.jpg" }
+        ];
+
+        const cart = [];
+        const productList = document.getElementById('product-list');
+        const cartCount = document.getElementById('cart-count');
+
+        function renderProducts() {
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.price} fcfa</p>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Ajouter au panier</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            cartCount.textContent = cart.length;
+        }
+
+        // Appeler la fonction pour afficher les produits
+        renderProducts();
+		function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    const cartCount = document.getElementById('cart-count');
+    cartCount.textContent = cart.length;
+    alert(`${product.name} a été ajouté au panier.`);
+}
+
+    </script>
+</body>
+</html>
+
